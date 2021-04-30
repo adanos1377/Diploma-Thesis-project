@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>22f0dae8-4bd5-4253-ad5d-c00835198378</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20210106161845_PlayerBase.cs" />
+    <Compile Remove="Migrations\20210106161845_PlayerBase.Designer.cs" />
+    <Compile Remove="Migrations\20210114183441_InitialPlayerBase.cs" />
+    <Compile Remove="Migrations\20210114183441_InitialPlayerBase.Designer.cs" />
+    <Compile Remove="Migrations\SQLite\20201122221101_PlayerBase.cs" />
+    <Compile Remove="Migrations\SQLite\20201122221101_PlayerBase.Designer.cs" />
+    <Compile Remove="Migrations\SQLite\20210106135036_InitialPlayerBase.cs" />
+    <Compile Remove="Migrations\SQLite\20210106135036_InitialPlayerBase.Designer.cs" />
+    <Compile Remove="Migrations\SQLite\20210106150010_PlayerBaseUpdated.cs" />
+    <Compile Remove="Migrations\SQLite\20210106150010_PlayerBaseUpdated.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\SQLite\" />
+  </ItemGroup>
+
+</Project>
