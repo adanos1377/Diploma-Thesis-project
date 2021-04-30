@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c4cc5ced6a57487bb261f13b08a19ff5" Name="Diagram1" ZoomLevel="111">
+        <EntityTypeShape EntityType="TalkaTIPModel.Blocked" Width="1.5" PointX="4.25" PointY="12.25" />
+        <EntityTypeShape EntityType="TalkaTIPModel.Friends" Width="1.5" PointX="3.75" PointY="5.125" />
+        <EntityTypeShape EntityType="TalkaTIPModel.GroupChat" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="TalkaTIPModel.GroupChatMessages" Width="1.5" PointX="4.625" PointY="7.25" />
+        <EntityTypeShape EntityType="TalkaTIPModel.GroupChatUsers" Width="1.5" PointX="4.625" PointY="10" />
+        <EntityTypeShape EntityType="TalkaTIPModel.Histories" Width="1.5" PointX="1" PointY="12.875" />
+        <EntityTypeShape EntityType="TalkaTIPModel.Messages" Width="1.5" PointX="3.25" PointY="14.5" />
+        <EntityTypeShape EntityType="TalkaTIPModel.Users" Width="1.5" PointX="1.75" PointY="8.25" />
+        <AssociationConnector Association="TalkaTIPModel.FK_Blocked_0_0" />
+        <AssociationConnector Association="TalkaTIPModel.FK_Blocked_1_0" />
+        <AssociationConnector Association="TalkaTIPModel.FK_Friends_0_0" />
+        <AssociationConnector Association="TalkaTIPModel.FK_Friends_1_0" />
+        <AssociationConnector Association="TalkaTIPModel.FK_GroupChatMessages_1_0" />
+        <AssociationConnector Association="TalkaTIPModel.FK_GroupChatUsers_0_0" />
+        <AssociationConnector Association="TalkaTIPModel.FK_GroupChatMessages_0_0" />
+        <AssociationConnector Association="TalkaTIPModel.FK_GroupChatUsers_1_0" />
+        <AssociationConnector Association="TalkaTIPModel.FK_Histories_0_0" />
+        <AssociationConnector Association="TalkaTIPModel.FK_Histories_1_0" />
+        <AssociationConnector Association="TalkaTIPModel.FK_Messages_0_0" />
+        <AssociationConnector Association="TalkaTIPModel.FK_Messages_1_0" />
+        <EntityTypeShape EntityType="TalkaTIPModel.UsersAPIs" Width="1.5" PointX="1.25" PointY="5.75" />
+        <AssociationConnector Association="TalkaTIPModel.FK_UsersAPIs_0_0" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

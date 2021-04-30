@@ -1,0 +1,760 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TalkaTIPModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\karol\Desktop\Messenger-with-matchmaking-system-adaptable-to-selected-games\TalkaTIPServer\TalkaTIPServer\bin\Debug\TalkaTIP.sqlite" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Blocked">
+          <Key>
+            <PropertyRef Name="BlockID" />
+          </Key>
+          <Property Name="BlockID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID1" Type="integer" Nullable="false" />
+          <Property Name="UserID2" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Friends">
+          <Key>
+            <PropertyRef Name="FriendID" />
+          </Key>
+          <Property Name="FriendID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID1" Type="integer" Nullable="false" />
+          <Property Name="UserID2" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GroupChat">
+          <Key>
+            <PropertyRef Name="GroupChatID" />
+          </Key>
+          <Property Name="GroupChatID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupChatName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsApiControlled" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GroupChatMessages">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChatID" Type="integer" />
+          <Property Name="UserSenderID" Type="integer" Nullable="false" />
+          <Property Name="SendTime" Type="datetime" Nullable="false" />
+          <Property Name="Message" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GroupChatUsers">
+          <Key>
+            <PropertyRef Name="GroupChatJoinID" />
+          </Key>
+          <Property Name="GroupChatJoinID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserInChatID" Type="integer" Nullable="false" />
+          <Property Name="JoinedGroupChatID" Type="integer" Nullable="false" />
+          <Property Name="JoinTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Histories">
+          <Key>
+            <PropertyRef Name="HistoryID" />
+          </Key>
+          <Property Name="HistoryID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserSenderID" Type="integer" />
+          <Property Name="UserReceiverID" Type="integer" />
+          <Property Name="Start" Type="datetime" Nullable="false" />
+          <Property Name="Duration" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="ChatID" />
+          </Key>
+          <Property Name="ChatID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserSenderID" Type="integer" Nullable="false" />
+          <Property Name="UserReceiverID" Type="integer" Nullable="false" />
+          <Property Name="SendTime" Type="datetime" Nullable="false" />
+          <Property Name="Message" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="char" MaxLength="64" Nullable="false" />
+          <Property Name="LastLogoutDate" Type="datetime" Nullable="false" />
+          <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersAPIs">
+          <Key>
+            <PropertyRef Name="CorrelationID" />
+          </Key>
+          <Property Name="CorrelationID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CorrelatedUserID" Type="integer" Nullable="false" />
+          <Property Name="ApiUri" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ApiName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Blocked_0_0">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Blocked" Type="Self.Blocked" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Blocked">
+              <PropertyRef Name="UserID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Blocked_1_0">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Blocked" Type="Self.Blocked" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Blocked">
+              <PropertyRef Name="UserID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friends_0_0">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="UserID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friends_1_0">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="UserID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupChatMessages_0_0">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="GroupChatMessages" Type="Self.GroupChatMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="GroupChatMessages">
+              <PropertyRef Name="UserSenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupChatMessages_1_0">
+          <End Role="GroupChat" Type="Self.GroupChat" Multiplicity="0..1" />
+          <End Role="GroupChatMessages" Type="Self.GroupChatMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupChat">
+              <PropertyRef Name="GroupChatID" />
+            </Principal>
+            <Dependent Role="GroupChatMessages">
+              <PropertyRef Name="ChatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupChatUsers_0_0">
+          <End Role="GroupChat" Type="Self.GroupChat" Multiplicity="1" />
+          <End Role="GroupChatUsers" Type="Self.GroupChatUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupChat">
+              <PropertyRef Name="GroupChatID" />
+            </Principal>
+            <Dependent Role="GroupChatUsers">
+              <PropertyRef Name="JoinedGroupChatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupChatUsers_1_0">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="GroupChatUsers" Type="Self.GroupChatUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="GroupChatUsers">
+              <PropertyRef Name="UserInChatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Histories_0_0">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Histories" Type="Self.Histories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Histories">
+              <PropertyRef Name="UserReceiverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Histories_1_0">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Histories" Type="Self.Histories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Histories">
+              <PropertyRef Name="UserSenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_0_0">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="UserReceiverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_1_0">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="UserSenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersAPIs_0_0">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UsersAPIs" Type="Self.UsersAPIs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UsersAPIs">
+              <PropertyRef Name="CorrelatedUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TalkaTIPModelStoreContainer">
+          <EntitySet Name="Blocked" EntityType="Self.Blocked" store:Type="Tables" />
+          <EntitySet Name="Friends" EntityType="Self.Friends" store:Type="Tables" />
+          <EntitySet Name="GroupChat" EntityType="Self.GroupChat" store:Type="Tables" />
+          <EntitySet Name="GroupChatMessages" EntityType="Self.GroupChatMessages" store:Type="Tables" />
+          <EntitySet Name="GroupChatUsers" EntityType="Self.GroupChatUsers" store:Type="Tables" />
+          <EntitySet Name="Histories" EntityType="Self.Histories" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" store:Type="Tables" />
+          <EntitySet Name="UsersAPIs" EntityType="Self.UsersAPIs" store:Type="Tables" />
+          <AssociationSet Name="FK_Blocked_0_0" Association="Self.FK_Blocked_0_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Blocked" EntitySet="Blocked" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Blocked_1_0" Association="Self.FK_Blocked_1_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Blocked" EntitySet="Blocked" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friends_0_0" Association="Self.FK_Friends_0_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friends_1_0" Association="Self.FK_Friends_1_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupChatMessages_0_0" Association="Self.FK_GroupChatMessages_0_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="GroupChatMessages" EntitySet="GroupChatMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupChatMessages_1_0" Association="Self.FK_GroupChatMessages_1_0">
+            <End Role="GroupChat" EntitySet="GroupChat" />
+            <End Role="GroupChatMessages" EntitySet="GroupChatMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupChatUsers_0_0" Association="Self.FK_GroupChatUsers_0_0">
+            <End Role="GroupChat" EntitySet="GroupChat" />
+            <End Role="GroupChatUsers" EntitySet="GroupChatUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupChatUsers_1_0" Association="Self.FK_GroupChatUsers_1_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="GroupChatUsers" EntitySet="GroupChatUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Histories_0_0" Association="Self.FK_Histories_0_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Histories" EntitySet="Histories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Histories_1_0" Association="Self.FK_Histories_1_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Histories" EntitySet="Histories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_0_0" Association="Self.FK_Messages_0_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_1_0" Association="Self.FK_Messages_1_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersAPIs_0_0" Association="Self.FK_UsersAPIs_0_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersAPIs" EntitySet="UsersAPIs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TalkaTIPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TalkaTipDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Blocked" EntityType="TalkaTIPModel.Blocked" />
+          <EntitySet Name="Friends" EntityType="TalkaTIPModel.Friends" />
+          <EntitySet Name="GroupChat" EntityType="TalkaTIPModel.GroupChat" />
+          <EntitySet Name="GroupChatMessages" EntityType="TalkaTIPModel.GroupChatMessages" />
+          <EntitySet Name="GroupChatUsers" EntityType="TalkaTIPModel.GroupChatUsers" />
+          <EntitySet Name="Histories" EntityType="TalkaTIPModel.Histories" />
+          <EntitySet Name="Messages" EntityType="TalkaTIPModel.Messages" />
+          <EntitySet Name="Users" EntityType="TalkaTIPModel.Users" />
+          <AssociationSet Name="FK_Blocked_0_0" Association="TalkaTIPModel.FK_Blocked_0_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Blocked" EntitySet="Blocked" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Blocked_1_0" Association="TalkaTIPModel.FK_Blocked_1_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Blocked" EntitySet="Blocked" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friends_0_0" Association="TalkaTIPModel.FK_Friends_0_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friends_1_0" Association="TalkaTIPModel.FK_Friends_1_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupChatMessages_1_0" Association="TalkaTIPModel.FK_GroupChatMessages_1_0">
+            <End Role="GroupChat" EntitySet="GroupChat" />
+            <End Role="GroupChatMessages" EntitySet="GroupChatMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupChatUsers_0_0" Association="TalkaTIPModel.FK_GroupChatUsers_0_0">
+            <End Role="GroupChat" EntitySet="GroupChat" />
+            <End Role="GroupChatUsers" EntitySet="GroupChatUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupChatMessages_0_0" Association="TalkaTIPModel.FK_GroupChatMessages_0_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="GroupChatMessages" EntitySet="GroupChatMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GroupChatUsers_1_0" Association="TalkaTIPModel.FK_GroupChatUsers_1_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="GroupChatUsers" EntitySet="GroupChatUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Histories_0_0" Association="TalkaTIPModel.FK_Histories_0_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Histories" EntitySet="Histories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Histories_1_0" Association="TalkaTIPModel.FK_Histories_1_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Histories" EntitySet="Histories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_0_0" Association="TalkaTIPModel.FK_Messages_0_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Messages_1_0" Association="TalkaTIPModel.FK_Messages_1_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <EntitySet Name="UsersAPIs" EntityType="TalkaTIPModel.UsersAPIs" />
+          <AssociationSet Name="FK_UsersAPIs_0_0" Association="TalkaTIPModel.FK_UsersAPIs_0_0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersAPIs" EntitySet="UsersAPIs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Blocked">
+          <Key>
+            <PropertyRef Name="BlockID" />
+          </Key>
+          <Property Name="BlockID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID1" Type="Int64" Nullable="false" />
+          <Property Name="UserID2" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="TalkaTIPModel.FK_Blocked_0_0" FromRole="Blocked" ToRole="Users" />
+          <NavigationProperty Name="Users1" Relationship="TalkaTIPModel.FK_Blocked_1_0" FromRole="Blocked" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Friends">
+          <Key>
+            <PropertyRef Name="FriendID" />
+          </Key>
+          <Property Name="FriendID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID1" Type="Int64" Nullable="false" />
+          <Property Name="UserID2" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="TalkaTIPModel.FK_Friends_0_0" FromRole="Friends" ToRole="Users" />
+          <NavigationProperty Name="Users1" Relationship="TalkaTIPModel.FK_Friends_1_0" FromRole="Friends" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="GroupChat">
+          <Key>
+            <PropertyRef Name="GroupChatID" />
+          </Key>
+          <Property Name="GroupChatID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupChatName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsApiControlled" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="GroupChatMessages" Relationship="TalkaTIPModel.FK_GroupChatMessages_1_0" FromRole="GroupChat" ToRole="GroupChatMessages" />
+          <NavigationProperty Name="GroupChatUsers" Relationship="TalkaTIPModel.FK_GroupChatUsers_0_0" FromRole="GroupChat" ToRole="GroupChatUsers" />
+        </EntityType>
+        <EntityType Name="GroupChatMessages">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChatID" Type="Int64" />
+          <Property Name="UserSenderID" Type="Int64" Nullable="false" />
+          <Property Name="SendTime" Type="DateTime" Nullable="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="GroupChat" Relationship="TalkaTIPModel.FK_GroupChatMessages_1_0" FromRole="GroupChatMessages" ToRole="GroupChat" />
+          <NavigationProperty Name="Users" Relationship="TalkaTIPModel.FK_GroupChatMessages_0_0" FromRole="GroupChatMessages" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="GroupChatUsers">
+          <Key>
+            <PropertyRef Name="GroupChatJoinID" />
+          </Key>
+          <Property Name="GroupChatJoinID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserInChatID" Type="Int64" Nullable="false" />
+          <Property Name="JoinedGroupChatID" Type="Int64" Nullable="false" />
+          <Property Name="JoinTime" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="GroupChat" Relationship="TalkaTIPModel.FK_GroupChatUsers_0_0" FromRole="GroupChatUsers" ToRole="GroupChat" />
+          <NavigationProperty Name="Users" Relationship="TalkaTIPModel.FK_GroupChatUsers_1_0" FromRole="GroupChatUsers" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Histories">
+          <Key>
+            <PropertyRef Name="HistoryID" />
+          </Key>
+          <Property Name="HistoryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserSenderID" Type="Int64" />
+          <Property Name="UserReceiverID" Type="Int64" />
+          <Property Name="Start" Type="DateTime" Nullable="false" />
+          <Property Name="Duration" Type="DateTime" />
+          <NavigationProperty Name="Users" Relationship="TalkaTIPModel.FK_Histories_0_0" FromRole="Histories" ToRole="Users" />
+          <NavigationProperty Name="Users1" Relationship="TalkaTIPModel.FK_Histories_1_0" FromRole="Histories" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="ChatID" />
+          </Key>
+          <Property Name="ChatID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserSenderID" Type="Int64" Nullable="false" />
+          <Property Name="UserReceiverID" Type="Int64" Nullable="false" />
+          <Property Name="SendTime" Type="DateTime" Nullable="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="TalkaTIPModel.FK_Messages_0_0" FromRole="Messages" ToRole="Users" />
+          <NavigationProperty Name="Users1" Relationship="TalkaTIPModel.FK_Messages_1_0" FromRole="Messages" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="LastLogoutDate" Type="DateTime" Nullable="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Blocked" Relationship="TalkaTIPModel.FK_Blocked_0_0" FromRole="Users" ToRole="Blocked" />
+          <NavigationProperty Name="Blocked1" Relationship="TalkaTIPModel.FK_Blocked_1_0" FromRole="Users" ToRole="Blocked" />
+          <NavigationProperty Name="Friends" Relationship="TalkaTIPModel.FK_Friends_0_0" FromRole="Users" ToRole="Friends" />
+          <NavigationProperty Name="Friends1" Relationship="TalkaTIPModel.FK_Friends_1_0" FromRole="Users" ToRole="Friends" />
+          <NavigationProperty Name="GroupChatMessages" Relationship="TalkaTIPModel.FK_GroupChatMessages_0_0" FromRole="Users" ToRole="GroupChatMessages" />
+          <NavigationProperty Name="GroupChatUsers" Relationship="TalkaTIPModel.FK_GroupChatUsers_1_0" FromRole="Users" ToRole="GroupChatUsers" />
+          <NavigationProperty Name="Histories" Relationship="TalkaTIPModel.FK_Histories_0_0" FromRole="Users" ToRole="Histories" />
+          <NavigationProperty Name="Histories1" Relationship="TalkaTIPModel.FK_Histories_1_0" FromRole="Users" ToRole="Histories" />
+          <NavigationProperty Name="Messages" Relationship="TalkaTIPModel.FK_Messages_0_0" FromRole="Users" ToRole="Messages" />
+          <NavigationProperty Name="Messages1" Relationship="TalkaTIPModel.FK_Messages_1_0" FromRole="Users" ToRole="Messages" />
+          <NavigationProperty Name="UsersAPIs" Relationship="TalkaTIPModel.FK_UsersAPIs_0_0" FromRole="Users" ToRole="UsersAPIs" />
+        </EntityType>
+        <Association Name="FK_Blocked_0_0">
+          <End Type="TalkaTIPModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="TalkaTIPModel.Blocked" Role="Blocked" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Blocked">
+              <PropertyRef Name="UserID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Blocked_1_0">
+          <End Type="TalkaTIPModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="TalkaTIPModel.Blocked" Role="Blocked" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Blocked">
+              <PropertyRef Name="UserID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friends_0_0">
+          <End Type="TalkaTIPModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="TalkaTIPModel.Friends" Role="Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="UserID2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friends_1_0">
+          <End Type="TalkaTIPModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="TalkaTIPModel.Friends" Role="Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="UserID1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupChatMessages_1_0">
+          <End Type="TalkaTIPModel.GroupChat" Role="GroupChat" Multiplicity="0..1" />
+          <End Type="TalkaTIPModel.GroupChatMessages" Role="GroupChatMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupChat">
+              <PropertyRef Name="GroupChatID" />
+            </Principal>
+            <Dependent Role="GroupChatMessages">
+              <PropertyRef Name="ChatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupChatUsers_0_0">
+          <End Type="TalkaTIPModel.GroupChat" Role="GroupChat" Multiplicity="1" />
+          <End Type="TalkaTIPModel.GroupChatUsers" Role="GroupChatUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupChat">
+              <PropertyRef Name="GroupChatID" />
+            </Principal>
+            <Dependent Role="GroupChatUsers">
+              <PropertyRef Name="JoinedGroupChatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupChatMessages_0_0">
+          <End Type="TalkaTIPModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="TalkaTIPModel.GroupChatMessages" Role="GroupChatMessages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="GroupChatMessages">
+              <PropertyRef Name="UserSenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GroupChatUsers_1_0">
+          <End Type="TalkaTIPModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="TalkaTIPModel.GroupChatUsers" Role="GroupChatUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="GroupChatUsers">
+              <PropertyRef Name="UserInChatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Histories_0_0">
+          <End Type="TalkaTIPModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="TalkaTIPModel.Histories" Role="Histories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Histories">
+              <PropertyRef Name="UserReceiverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Histories_1_0">
+          <End Type="TalkaTIPModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="TalkaTIPModel.Histories" Role="Histories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Histories">
+              <PropertyRef Name="UserSenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_0_0">
+          <End Type="TalkaTIPModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="TalkaTIPModel.Messages" Role="Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="UserReceiverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Messages_1_0">
+          <End Type="TalkaTIPModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="TalkaTIPModel.Messages" Role="Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="UserSenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UsersAPIs">
+          <Key>
+            <PropertyRef Name="CorrelationID" />
+          </Key>
+          <Property Name="CorrelationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CorrelatedUserID" Type="Int64" Nullable="false" />
+          <Property Name="ApiUri" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ApiName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="TalkaTIPModel.FK_UsersAPIs_0_0" FromRole="UsersAPIs" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_UsersAPIs_0_0">
+          <End Type="TalkaTIPModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="TalkaTIPModel.UsersAPIs" Role="UsersAPIs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UsersAPIs">
+              <PropertyRef Name="CorrelatedUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TalkaTIPModelStoreContainer" CdmEntityContainer="TalkaTipDB">
+          <EntitySetMapping Name="Blocked">
+            <EntityTypeMapping TypeName="TalkaTIPModel.Blocked">
+              <MappingFragment StoreEntitySet="Blocked">
+                <ScalarProperty Name="UserID2" ColumnName="UserID2" />
+                <ScalarProperty Name="UserID1" ColumnName="UserID1" />
+                <ScalarProperty Name="BlockID" ColumnName="BlockID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Friends">
+            <EntityTypeMapping TypeName="TalkaTIPModel.Friends">
+              <MappingFragment StoreEntitySet="Friends">
+                <ScalarProperty Name="UserID2" ColumnName="UserID2" />
+                <ScalarProperty Name="UserID1" ColumnName="UserID1" />
+                <ScalarProperty Name="FriendID" ColumnName="FriendID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupChat">
+            <EntityTypeMapping TypeName="TalkaTIPModel.GroupChat">
+              <MappingFragment StoreEntitySet="GroupChat">
+                <ScalarProperty Name="IsApiControlled" ColumnName="IsApiControlled" />
+                <ScalarProperty Name="GroupChatName" ColumnName="GroupChatName" />
+                <ScalarProperty Name="GroupChatID" ColumnName="GroupChatID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupChatMessages">
+            <EntityTypeMapping TypeName="TalkaTIPModel.GroupChatMessages">
+              <MappingFragment StoreEntitySet="GroupChatMessages">
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="SendTime" ColumnName="SendTime" />
+                <ScalarProperty Name="UserSenderID" ColumnName="UserSenderID" />
+                <ScalarProperty Name="ChatID" ColumnName="ChatID" />
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GroupChatUsers">
+            <EntityTypeMapping TypeName="TalkaTIPModel.GroupChatUsers">
+              <MappingFragment StoreEntitySet="GroupChatUsers">
+                <ScalarProperty Name="JoinTime" ColumnName="JoinTime" />
+                <ScalarProperty Name="JoinedGroupChatID" ColumnName="JoinedGroupChatID" />
+                <ScalarProperty Name="UserInChatID" ColumnName="UserInChatID" />
+                <ScalarProperty Name="GroupChatJoinID" ColumnName="GroupChatJoinID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Histories">
+            <EntityTypeMapping TypeName="TalkaTIPModel.Histories">
+              <MappingFragment StoreEntitySet="Histories">
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="UserReceiverID" ColumnName="UserReceiverID" />
+                <ScalarProperty Name="UserSenderID" ColumnName="UserSenderID" />
+                <ScalarProperty Name="HistoryID" ColumnName="HistoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="TalkaTIPModel.Messages">
+              <MappingFragment StoreEntitySet="Messages">
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="SendTime" ColumnName="SendTime" />
+                <ScalarProperty Name="UserReceiverID" ColumnName="UserReceiverID" />
+                <ScalarProperty Name="UserSenderID" ColumnName="UserSenderID" />
+                <ScalarProperty Name="ChatID" ColumnName="ChatID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TalkaTIPModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="LastLogoutDate" ColumnName="LastLogoutDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersAPIs">
+            <EntityTypeMapping TypeName="TalkaTIPModel.UsersAPIs">
+              <MappingFragment StoreEntitySet="UsersAPIs">
+                <ScalarProperty Name="ApiName" ColumnName="ApiName" />
+                <ScalarProperty Name="ApiUri" ColumnName="ApiUri" />
+                <ScalarProperty Name="CorrelatedUserID" ColumnName="CorrelatedUserID" />
+                <ScalarProperty Name="CorrelationID" ColumnName="CorrelationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
